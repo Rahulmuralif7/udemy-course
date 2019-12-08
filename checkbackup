@@ -1,0 +1,40 @@
+## DESCRIPTION:
+
+
+
+class CheckBackup 
+        def run
+
+                error_msg = ''
+               backup_path = "/Users/rahm/green-lantern/"
+                fs_path = "/Users/rahm/udemy-course/"
+
+# check if the image  is created or not
+
+                recent_backup = `find #{fs_path} -name "ol7registry_latest*" -mmin -60 -print`
+
+               if (not recent_backup.empty?) then
+                         puts  "New files  created\n"
+                        backup_name = `basename '#{recent_backup}'`
+                        check_fs = `ls #{fs_path} | grep #{docker_backup_name}`
+# check if  backup copied to fs
+#                         if (check_fs.empty?) then
+#                            error_msg += " Backup not copied over to fs!\n"
+#
+#                         end
+                else
+                        error_msg += " Backup not created!\n"
+
+                end
+
+                if not error_msg.empty?
+                    puts error_msg
+#                   critical
+                else
+#                   ok
+                end
+        end
+end
+a = CheckBackup.new
+a.run
+
